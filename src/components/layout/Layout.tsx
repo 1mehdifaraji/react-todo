@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Helmet } from "react-helmet";
 
-import { Container, Footer } from "components";
+import { Container, Footer, Header } from "components";
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,6 +16,7 @@ const Layout: FC<LayoutProps> = ({ children, title: customTitle }) => {
         <title>{title}</title>
         <link rel="canonical" href="http://localhost:3001" />
       </Helmet>
+      <Header />
       <Container>{children}</Container>
       <Footer />
     </>

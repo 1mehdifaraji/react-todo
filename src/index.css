@@ -22,6 +22,6 @@
 
 @layer base {
   body {
-    @apply m-0 bg-red-300 font-regular;
+    @apply m-0 bg-white font-regular;
   }
 }

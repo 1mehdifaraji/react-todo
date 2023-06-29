@@ -3,5 +3,6 @@ export { default as Loading } from "components/common/Loading";
 
 // Layouts
 export { default as Container } from "components/layout/Container";
+export { default as Header } from "components/layout/Header";
 export { default as Layout } from "components/layout/Layout";
 export { default as Footer } from "components/layout/Footer";
