@@ -4,24 +4,24 @@
 
 @font-face {
   font-family: "light";
-  src: url("assets/fonts/YsabeauInfant-Light.woff2") format("woff2");
+  src: url("assets/fonts/BarlowCondensed-Light.woff2") format("woff2");
   font-display: swap;
 }
 
 @font-face {
   font-family: "regular";
-  src: url("assets/fonts/YsabeauInfant-Regular.woff2") format("woff2");
+  src: url("assets/fonts/BarlowCondensed-Medium.woff2") format("woff2");
   font-display: swap;
 }
 
 @font-face {
   font-family: "bold";
-  src: url("assets/fonts/YsabeauInfant-Bold.woff2") format("woff2");
+  src: url("assets/fonts/BarlowCondensed-Bold.woff2") format("woff2");
   font-display: swap;
 }
 
 @layer base {
   body {
-    @apply m-0 bg-white font-regular;
+    @apply m-0 bg-red-300 font-regular;
   }
 }

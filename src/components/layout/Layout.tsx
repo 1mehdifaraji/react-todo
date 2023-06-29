@@ -8,15 +8,18 @@ interface LayoutProps {
   title?: string;
 }
 
-const Layout: FC<LayoutProps> = ({ children, title }) => (
-  <>
-    <Helmet>
-      <title>{title ? `React app | ${title}` : "React app"}</title>
-      <link rel="canonical" href="http://localhost:3001" />
-    </Helmet>
-    <Container>{children}</Container>
-    <Footer />
-  </>
-);
+const Layout: FC<LayoutProps> = ({ children, title: customTitle }) => {
+  const title = customTitle ? `React app | ${customTitle}` : "React app";
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href="http://localhost:3001" />
+      </Helmet>
+      <Container>{children}</Container>
+      <Footer />
+    </>
+  );
+};
 
 export default Layout;
