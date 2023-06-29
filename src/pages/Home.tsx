@@ -1,7 +1,9 @@
 import { FC } from "react";
 
+import { Layout } from "components";
+
 const Homepage: FC = () => {
-  return <div>Homepage</div>;
+  return <Layout title="Home">Homepage</Layout>;
 };
 
 export default Homepage;
