@@ -17,9 +17,9 @@ const Header: FC<HeaderProps> = () => {
           />
           <div>React Todo</div>
         </Link>
-        <Button>
-          <Link to="/add">Add task</Link>
-        </Button>
+        <Link to="/add">
+          <Button>Add Task</Button>
+        </Link>
       </Container>
     </div>
   );

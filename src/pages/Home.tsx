@@ -30,17 +30,17 @@ const Homepage: FC = () => {
     isError,
   } = useQuery(["tasks"], () => fetchTasks());
 
-  const {
-    isLoading: mutationLoading,
-    mutate,
-    data: mutateData,
-  } = useMutation(() => axios.delete(`/tasks/${id}`).then(({ data }) => data), {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      setDeleteTaskModal(false);
-    },
-    onError: (e) => console.log(e),
-  });
+  const { isLoading: mutationLoading, mutate } = useMutation(
+    () => axios.delete(`/tasks/${id}`).then(({ data }) => data),
+    {
+      onSuccess: () => {
+        queryClient
+          .invalidateQueries({ queryKey: ["tasks"] })
+          .then(() => setDeleteTaskModal(false));
+      },
+      onError: (e) => console.log(e),
+    }
+  );
 
   return (
     <Layout title="Home">

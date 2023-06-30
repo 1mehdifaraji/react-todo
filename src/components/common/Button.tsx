@@ -6,6 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
   loading?: boolean;
   danger?: boolean;
+  disabled?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -14,13 +15,14 @@ const Button: FC<ButtonProps> = ({
   className,
   loading,
   danger,
+  disabled,
 }) => {
   return (
     <button
-      disabled={loading}
+      disabled={disabled ? disabled : loading}
       onClick={onClick}
       className={`rounded-xl py-2 px-4 ${
-        danger ? "bg-red-500" : "bg-blue-400"
+        disabled ? "bg-gray-300" : danger ? "bg-red-500" : "bg-blue-400"
       } transition-all text-sm space-x-2 text-white ${
         className ? className : ""
       }`}

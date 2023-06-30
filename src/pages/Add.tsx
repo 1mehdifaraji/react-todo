@@ -18,7 +18,6 @@ const Addtaskpage: FC = () => {
   const {
     isLoading: mutationLoading,
     mutate,
-    data: mutateData,
     isError,
   } = useMutation(
     () =>
@@ -27,8 +26,9 @@ const Addtaskpage: FC = () => {
         .then(({ data }) => data),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["tasks"] });
-        navigate(-1);
+        queryClient
+          .invalidateQueries({ queryKey: ["tasks"] })
+          .then(() => navigate(-1));
       },
       onError: (e) => console.log(e),
     }
@@ -82,6 +82,7 @@ const Addtaskpage: FC = () => {
                 </div>
               </div>
               <Button
+                disabled={!title?.length || !desc?.length}
                 loading={mutationLoading}
                 className="w-full mt-8"
                 onClick={mutate}

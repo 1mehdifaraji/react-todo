@@ -13,7 +13,7 @@ const Task: FC<TaskProps> = ({ desc, status, id, title, index, onDelete }) => (
     animate={{ opacity: 1 }}
     transition={{ duration: 0.55, ease: "easeIn" }}
     exit={{ opacity: 0 }}
-    className={`flex items-center justify-between border ${
+    className={`flex items-center justify-between border hover:shadow-xl hover:shadow-gray-400/10 transition-all ${
       status ? "border-green-200/80" : "border-red-100/80"
     } rounded-3xl px-4 py-2 ${index !== 0 ? "mt-4" : ""}`}
   >

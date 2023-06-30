@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 import { Layout, Loading, Error, Input, Status, Button } from "components";
@@ -9,6 +9,9 @@ import { Layout, Loading, Error, Input, Status, Button } from "components";
 interface TaskpageProps {}
 
 const Taskpage: FC<TaskpageProps> = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [title, setTitle] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
@@ -21,6 +24,21 @@ const Taskpage: FC<TaskpageProps> = () => {
     setCompleted(data?.status);
     return data;
   };
+
+  const { isLoading: mutationLoading, mutate } = useMutation(
+    () =>
+      axios
+        .put(`/tasks/${id}`, { title, desc, status: completed })
+        .then(({ data }) => data),
+    {
+      onSuccess: () => {
+        queryClient
+          .invalidateQueries({ queryKey: ["tasks"] })
+          .then(() => navigate(-1));
+      },
+      onError: (e) => console.log(e),
+    }
+  );
 
   const {
     data: task,
@@ -77,7 +95,11 @@ const Taskpage: FC<TaskpageProps> = () => {
                   </Status>
                 </div>
               </div>
-              <Button loading={true} className="w-full mt-8" onClick={() => {}}>
+              <Button
+                loading={mutationLoading}
+                className="w-full mt-8"
+                onClick={mutate}
+              >
                 Submit
               </Button>
             </div>
