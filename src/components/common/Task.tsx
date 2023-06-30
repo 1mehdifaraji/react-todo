@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface TaskProps extends Task {
   index: number;
@@ -7,17 +8,19 @@ interface TaskProps extends Task {
 }
 
 const Task: FC<TaskProps> = ({ desc, status, id, title, index, onDelete }) => (
-  <div
-    className={`flex items-center justify-between border-[1px] ${
-      status ? "border-green-100/80" : "border-red-100/80"
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.55, ease: "easeIn" }}
+    exit={{ opacity: 0 }}
+    className={`flex items-center justify-between border ${
+      status ? "border-green-200/80" : "border-red-100/80"
     } rounded-3xl px-4 py-2 ${index !== 0 ? "mt-4" : ""}`}
   >
-    <div>
+    <div className="w-full">
       <div className="flex items-center justify-between">
         <Link to={`/task/${id}`}>
-          <div className="w-4/5">
-            <div className="font-bold text-lg line-clamp-1">{title}</div>
-          </div>
+          <div className="font-bold text-lg line-clamp-1">{title}</div>
         </Link>
         <div className="flex items-center space-x-1">
           <div
@@ -56,12 +59,12 @@ const Task: FC<TaskProps> = ({ desc, status, id, title, index, onDelete }) => (
           </svg>
         </div>
       </div>
-      <Link to={`/todo/${id}`}>
+      <Link to={`/task/${id}`}>
         <div className="text-sm text-gray-400 font-light line-clamp-2 mt-1 mr-6">
           {desc}
         </div>
       </Link>
     </div>
-  </div>
+  </motion.div>
 );
 export default Task;

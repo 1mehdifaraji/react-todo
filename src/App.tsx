@@ -6,6 +6,7 @@ import { Loading } from "components";
 const NotFoundPage = lazy(() => import("./pages/404"));
 const Home = lazy(() => import("./pages/Home"));
 const Task = lazy(() => import("./pages/Task"));
+const Add = lazy(() => import("./pages/Add"));
 
 const App: FC = () => (
   <Routes>
@@ -22,6 +23,14 @@ const App: FC = () => (
       element={
         <Suspense fallback={<Loading />}>
           <Task />
+        </Suspense>
+      }
+    />
+    <Route
+      path="/add"
+      element={
+        <Suspense fallback={<Loading />}>
+          <Add />
         </Suspense>
       }
     />

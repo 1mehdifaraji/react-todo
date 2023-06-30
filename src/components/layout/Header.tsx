@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Container } from "components";
+import { Button, Container } from "components";
 import { Link } from "react-router-dom";
 
 interface HeaderProps {}
@@ -17,15 +17,9 @@ const Header: FC<HeaderProps> = () => {
           />
           <div>React Todo</div>
         </Link>
-        <div className="font-light tracking-wider">
-          <a
-            href={process.env.REACT_APP_LINKEDIN}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Mehdi Faraji
-          </a>
-        </div>
+        <Button>
+          <Link to="/add">Add task</Link>
+        </Button>
       </Container>
     </div>
   );

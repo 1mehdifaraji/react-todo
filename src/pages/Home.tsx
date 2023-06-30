@@ -1,43 +1,100 @@
 import { FC, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-import { Layout, Loading, Task } from "components";
+import {
+  Button,
+  Error,
+  Layout,
+  Loading,
+  Modal,
+  Task,
+  Notfound,
+} from "components";
 
 const Homepage: FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
-  const handleDelete = (id: string): void => {
-    setLoading(true);
-    axios
-      .delete(`/tasks/${id}`)
-      .then((res) => {
-        setLoading(false);
-        console.log(res.data);
-      })
-      .catch((e) => {
-        setLoading(false);
-        console.log(e);
-      });
+  const [deleteTaskModal, setDeleteTaskModal] = useState<boolean>(false);
+  const [id, setId] = useState<string>("");
+
+  const fetchTasks = async (): Promise<Task[]> => {
+    const { data } = await axios.get(`/tasks`);
+    return data;
   };
+
+  const {
+    data: tasks,
+    isLoading,
+    isError,
+  } = useQuery(["tasks"], () => fetchTasks());
+
+  const {
+    isLoading: mutationLoading,
+    mutate,
+    data: mutateData,
+  } = useMutation(() => axios.delete(`/tasks/${id}`).then(({ data }) => data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      setDeleteTaskModal(false);
+    },
+    onError: (e) => console.log(e),
+  });
 
   return (
     <Layout title="Home">
-      {loading ? (
-        <Loading />
-      ) : (
-        Array.from(Array(10).keys()).map((each, index) => {
-          return (
-            <Task
-              onDelete={(id: string) => handleDelete(id)}
-              index={index}
-              desc="asd asdasjdn asjkdbaksjdas hkjdh askjdh dkjashd sakjdh akjdashdkjash dasjkdhaskjd haskjd haskd gweyifg webirfyvbaerwofabwerfov rbof wefoyw efiuywqb fiuewrhfberauicvaerukhcbv aerub cvehjrb cvarweuhb cvauwh"
-              status={false}
-              id="123"
-              title="asoudnaskjd bnaskhjdbashjkdbqeiyufhb wreiuyfb wkfbareifkjhaerb gjlehr bvofvwirfyvberuhvb erwkuwjfbwklfbwefغهقثزبعشثقههغز بشقصغبزصثهبخزص قثعغبزاز یسنبتزیسنبتایس بتلانشثق بنشثقبل شثتمقا لدثعقد شثقعد شثقد صثقد شصث بزصثزب صثزبعبزسیتبازسیبزسیتبنلندس یتباسیبسیدزبهعصغقبصهثذ "
-            />
-          );
-        })
-      )}
+      <Modal
+        title={"Delete task"}
+        isOpen={deleteTaskModal}
+        onClose={() => setDeleteTaskModal(false)}
+      >
+        <div className="text-center">
+          Are you sure you want to delete task ?
+        </div>
+        <div className="flex items-center space-x-2 mt-6 mx-10">
+          <Button
+            danger
+            className="w-full"
+            onClick={() => {
+              setId(id);
+              mutate();
+            }}
+            loading={mutationLoading}
+          >
+            Delete
+          </Button>
+          <Button className="w-full" onClick={() => setDeleteTaskModal(false)}>
+            Cancel
+          </Button>
+        </div>
+      </Modal>
+      <AnimatePresence>
+        {isLoading ? (
+          <Loading />
+        ) : isError ? (
+          <Error />
+        ) : tasks?.length > 0 ? (
+          tasks?.map(({ desc, id, status, title }, index) => {
+            return (
+              <Task
+                key={id}
+                onDelete={() => {
+                  setId(id);
+                  setDeleteTaskModal(true);
+                }}
+                index={index}
+                desc={desc}
+                status={status}
+                id={id}
+                title={title}
+              />
+            );
+          })
+        ) : (
+          <Notfound />
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };
