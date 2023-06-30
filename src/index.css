@@ -22,6 +22,6 @@
 
 @layer base {
   body {
-    @apply m-0 bg-white font-regular;
+    @apply m-0 bg-white font-regular selection:text-blue-400 selection:bg-sky-100;
   }
 }

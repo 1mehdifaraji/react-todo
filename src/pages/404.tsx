@@ -1,12 +1,14 @@
 import { FC } from "react";
 
-import { PrevPage } from "components";
+import { Layout, PrevPage } from "components";
 
 const NotFoundPage: FC = () => (
-  <div className="text-center my-4 flex items-center justify-center space-x-5">
-    <PrevPage />
-    <div>Page not found .</div>
-  </div>
+  <Layout title="404">
+    <div className="flex flex-col items-center justify-center h-64">
+      <div>Page not found .</div>
+      <PrevPage />
+    </div>
+  </Layout>
 );
 
 export default NotFoundPage;

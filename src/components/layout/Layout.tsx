@@ -17,7 +17,7 @@ const Layout: FC<LayoutProps> = ({ children, title: customTitle }) => {
         <link rel="canonical" href="http://localhost:3001" />
       </Helmet>
       <Header />
-      <Container>{children}</Container>
+      <Container className="mt-14 md:mt-28">{children}</Container>
       <Footer />
     </>
   );

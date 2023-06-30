@@ -7,7 +7,7 @@ interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   return (
-    <div className="shadow-xl shadow-gray-600/5 py-0 md:py-4 text-base md:text-xl">
+    <div className="shadow-xl shadow-gray-600/5 py-0 md:py-4 text-base md:text-xl fixed top-0 bg-white w-full">
       <Container className="flex items-center justify-between">
         <Link className="flex items-center space-x-2 text-gray-500" to="/">
           <img
@@ -17,7 +17,7 @@ const Header: FC<HeaderProps> = () => {
           />
           <div>React Todo</div>
         </Link>
-        <div className="font-light">
+        <div className="font-light tracking-wider">
           <a
             href={process.env.REACT_APP_LINKEDIN}
             target="_blank"
